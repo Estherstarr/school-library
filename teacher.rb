@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Defines a teacher class
 class Teacher < Person
   def initialize(age:, specialization:)
