@@ -5,7 +5,6 @@
 ## Built With
 
 - Ruby
-- Rubocop
 
 ## Getting Started
 
