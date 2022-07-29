@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+git_source(:github) { |school_library| "https://github.com/#{school-library}" }
 
 gem 'rubocop', '>= 1.0', '< 2.0'
 # gem "rails"
