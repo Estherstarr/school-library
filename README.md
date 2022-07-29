@@ -1,5 +1,3 @@
-![](https://img.shields.io/badge/Microverse-blueviolet)
-
 # School Library
 
 > A school library app to record what books are in the library and who borrows them. The app that you will create will allow you to: add new students or teachers, add new books and save records of who borrowed a given book and when.
@@ -27,7 +25,7 @@ $ irb
 To clone the project:
 
 ```bash
-$ git clone https://github.com/Lembani/school-library.git
+$ git clone https://github.com/Estherstarr/school-library.git
 $ cd school-library
 ```
 
