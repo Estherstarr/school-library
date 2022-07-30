@@ -1,3 +1,5 @@
+require_relative 'person'
+
 # Defines a teacher class
 class Teacher < Person
   def initialize(age:, specialization:, name: 'Unknown', parent_permission: true)
