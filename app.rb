@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# rubocop:disable all
 
 require 'json'
 require_relative './stored_data'
@@ -20,8 +19,7 @@ class App
     @people.read.map do |arr|
       if arr['class'].include?('Student')
         Student.new(arr['age'], arr['name'], arr['parent_permission'])
-      elsif
-        Teacher.new(arr['age'], arr['name'], arr['specialization'])
+      elsif Teacher.new(arr['age'], arr['name'], arr['specialization'])
       end
     end
     @rentals.read.map do |arr|
