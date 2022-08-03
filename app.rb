@@ -7,8 +7,6 @@ require_relative './rental'
 
 # This is the main entry point for the app
 class App
-  attr_reader :books, :people, :rentals, :id
-
   def initialize
     @people = StoredData.new('people')
     @books = StoredData.new('books')
@@ -165,7 +163,7 @@ class App
     print 'Enter author: '
     author = gets.chomp.strip.capitalize
     new_book = Book.new(title: title, author: author)
-    @book.push(new_book)
+    @books.push(new_book)
     puts
     puts 'New book was created successfully!'
     puts
@@ -182,8 +180,7 @@ class App
     date = gets.chomp.strip
     book = @books[selected_book]
     person = @people[selected_person]
-    new_rental = Rental.new(date: date, book: book, person: person)
-    @rentals.push(new_rental)
+    @rentals.push.Rental.new(date: date, book: book, person: person)
     puts
     puts 'Rental was created successfuly!'
     puts
@@ -210,5 +207,9 @@ class App
     puts 'Invalid option! '
     puts "Please enter a valid option from the following: \n"
     menu_options
+  end
+
+  def exit
+     @books.write(@books.map(&:create_object))
   end
 end
