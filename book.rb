@@ -16,6 +16,6 @@ class Book
   end
 
   def create_item
-    {title: @title, author: @author}
+    { title: @title, author: @author }
   end
 end

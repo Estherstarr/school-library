@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 require_relative './stored_data'
 require_relative './student'
@@ -11,7 +13,7 @@ class App
     @people = StoredData.new('people')
     @books = StoredData.new('books')
     @rentals = StoredData.new('rentals')
-    @books.read.map { |arr| Book.new(arr['title'], arr['author'])}
+    @books.read.map { |arr| Book.new(arr['title'], arr['author']) }
     @people.read.map do |arr|
       if arr['class'].include?('Student')
         Student.new(arr['age'], arr['name'], arr['parent_permission'])
@@ -77,9 +79,11 @@ class App
     puts
     puts 'Books'.upcase
     puts
-    puts 'No book yet! Choose option 4 to add a book ' if @books.empty?
+    puts 'No book yet! Choose option 4 to add a book '
     @books.each do |book|
-      puts "#{key} - #{book.title} by #{book.author}"
+      print "#{key} - [#{book.class.name} ID]: #{book.id} Title: #{book.title} "
+      print "Author: #{book.author}"
+      puts
       key += 1
     end
   end
@@ -163,8 +167,7 @@ class App
     print 'Enter author: '
     author = gets.chomp.strip.capitalize
     new_book = Book.new(title: title, author: author)
-    @books.push(new_book)
-    puts
+    @books = new_book
     puts 'New book was created successfully!'
     puts
   end
@@ -207,9 +210,5 @@ class App
     puts 'Invalid option! '
     puts "Please enter a valid option from the following: \n"
     menu_options
-  end
-
-  def exit
-     @books.write(@books.map(&:create_item))
   end
 end

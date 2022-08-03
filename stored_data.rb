@@ -16,7 +16,7 @@ class StoredData
   end
 
   def write(data)
-     json = JSON.generate(data)
+    json = JSON.generate(data)
     File.write(@file_name, json)
   end
 end
