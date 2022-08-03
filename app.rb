@@ -153,7 +153,7 @@ class App
     name = gets.chomp.strip.capitalize
     print 'Enter specialization: '
     specialization = gets.chomp.strip.capitalize
-    @people << Teacher.new(age: age, name: name, specialization: specialization)
+    @people.push(Teacher.new(age: age, name: name, specialization: specialization))
     puts 'New teacher created successfuly!'
   end
 
@@ -210,6 +210,6 @@ class App
   end
 
   def exit
-     @books.write(@books.map(&:create_object))
+     @books.write(@books.map(&:create_item))
   end
 end

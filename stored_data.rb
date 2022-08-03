@@ -5,7 +5,7 @@ require 'json'
 # Create a class to stored the data
 class StoredData
   def initialize(filename)
-    @file_name = "data/#{filename}"
+    @file_name = "data/#{filename}.json"
     write([]) unless File.file?(@file_name)
   end
 
@@ -16,6 +16,7 @@ class StoredData
   end
 
   def write(data)
-    File.write(@file_name, JSON.generate(data))
+     json = JSON.generate(data)
+    File.write(@file_name, json)
   end
 end
