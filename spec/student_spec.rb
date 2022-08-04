@@ -1,4 +1,4 @@
-# Writing test for the student class
+# # Writing test for the student class
 require './student'
 require './classroom'
 
@@ -8,7 +8,7 @@ describe Student do
     name = 'John Doe'
     classroom = '1A'
     parent_permission = true
-    student = Student.new(age, classroom, name, parent_permission)
+    student = Student.new(age: age, name: name, classroom: classroom, parent_permission: parent_permission)
 
     it 'should be defined' do
       expect(student).to be_a(Student)

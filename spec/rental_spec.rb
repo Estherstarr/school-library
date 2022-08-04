@@ -5,33 +5,26 @@ require './student'
 
 describe Rental do
   context 'Test if the rental class is defined' do
-    before(:context) do
-      @student = Student.new(age: 18, classroom: '1A', name: 'John Doe', parent_permission: true)
-      @book = Book.new(title: 'The Hobbit', author: 'J.R.R. Tolkien')
-      @rental = Rental.new(person, book)
-    end
+    title = 'The Hobbit'
+    author = 'J.R.R. Tolkien'
+    name = 'Mathew Morgan'
+    age = 30
+    date = '01/01/2020'
+    classroom = '1A'
+    parent_permission = true
+
+    book = Book.new(title: title, author: author)
+    student = Student.new(age: age, name: name, classroom: classroom, parent_permission: parent_permission)
+    rental = Rental.new(date: date, book: book, person: student)
 
     it 'should be defined' do
-      expect(@rental).to be_a(Rental)
+      expect(rental).to be_a(Rental)
     end
 
-    it 'should be a student or a professor' do
-      expect(@rental.person).to be_a(Student)
-      expect(@rental.person).to be_a(Teacher)
-    end
-
-    it 'should be an existed book' do
-      expect(@rental.book).to be_a(Book)
-    end
-
-    it 'should have parent_permission or can use services' do
-      expect(@rental.person.parent_permission).to eq(true)
-      expect(@rental.person.can_use_services?).to eq(true)
-    end
-
-    it 'should have correct number of the book and person' do
-      expect(@rental.book.number).to eq(1)
-      expect(@rental.person.number).to eq(1)
+    it 'should have a correct date, book and person' do
+      expect(rental.date).to eq(date)
+      expect(rental.book).to eq(book)
+      expect(rental.person).to eq(student)
     end
   end
 end
