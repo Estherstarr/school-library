@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Test if the rental class is defined
 require './rental'
 require './book'
@@ -16,22 +18,22 @@ describe Rental do
     end
 
     it 'should be a student or a professor' do
-        expect(@rental.person).to be_a(Student)
-        expect(@rental.person).to be_a(Teacher)
+      expect(@rental.person).to be_a(Student)
+      expect(@rental.person).to be_a(Teacher)
     end
 
     it 'should be an existed book' do
-        expect(@rental.book).to be_a(Book)
+      expect(@rental.book).to be_a(Book)
     end
 
     it 'should have parent_permission or can use services' do
-        expect(@rental.person.parent_permission).to eq(true)
-        expect(@rental.person.can_use_services?).to eq(true)
+      expect(@rental.person.parent_permission).to eq(true)
+      expect(@rental.person.can_use_services?).to eq(true)
     end
 
     it 'should have correct number of the book and person' do
-        expect(@rental.book.number).to eq(1)
-        expect(@rental.person.number).to eq(1)
+      expect(@rental.book.number).to eq(1)
+      expect(@rental.person.number).to eq(1)
     end
   end
 end

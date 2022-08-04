@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Writing test for the book class
 require './book'
 
