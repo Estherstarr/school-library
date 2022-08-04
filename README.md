@@ -36,6 +36,11 @@ $ cd school-library
 - Twitter: [@twitterhandle](https://twitter.com/AnibeEsther)
 - LinkedIn: [LinkedIn](https://linkedin.com/in/onwuanibeonome)
 
+👤 *Stanley SIMEON*
+
+- GitHub: [@stanleySimeon](https://github.com/stanleySimeon)
+- Twitter: [@mstanleyme](https://twitter.com/mstanleyme)
+- LinkedIn: [@stanleysimeon](https://www.linkedin.com/in/stanleysimeon/)
 
 ## 🤝 Contributing
 
