@@ -1,4 +1,4 @@
-# Create main app 
+# Create main app
 
 require_relative 'app'
 
