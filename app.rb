@@ -39,6 +39,8 @@ class App
   def save_data_to_file
     save_books_data_to_file
     save_person_data_to_file
+    save_rental_data_to_file
+
   end
 
   def save_books_data_to_file
@@ -57,11 +59,21 @@ class App
     file.close
   end
 
+  def save_rental_data_to_file
+    rentals_list = @rentals.map { |rental| rental.to_h }
+    rental_json = JSON.generate(rentals_list)
+
+    file = File.new("rental.json", "w")
+    file.write(rental_json)
+    file.close
+  end
+
   def load_data
     #load data from all the three files
     load_books
     load_student
     load_teacher
+    load_rentals
   end
 
   def load_books
@@ -104,6 +116,22 @@ class App
       @people = []
     end
   end
+
+  def load_rentals
+    begin
+      file = File.open("rentals.json")
+      json_data = file.read
+      parsed_data = JSON.parse(json_data)
+      file.close
+
+      @rentals = parsed_data.map do |rental_data|
+        Rentals.new(date: rental_data['date'], book: rental_data['book'], person: rental_data['person'])
+      end
+    rescue StandardError
+      @rentals = []
+    end
+  end
+
 
   def menu_options
     puts '1 - List all books'
