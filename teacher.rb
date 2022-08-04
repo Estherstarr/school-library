@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'person'
 
 # Defines a teacher class
@@ -18,7 +20,7 @@ class Teacher < Person
       age: age,
       name: name,
       type: 'teacher',
-      specialization: specialization,
+      specialization: specialization
     }
   end
 end
