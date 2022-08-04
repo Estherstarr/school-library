@@ -20,4 +20,12 @@ class Rental
     @book = book
     book.rentals.push(self) unless book.rentals.include?(self)
   end
+
+  def to_h
+    {
+      date: date,
+      book: book.to_h,
+      person: person.to_h
+    }
+  end
 end
