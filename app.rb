@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# disable Metrics/LineLength
+
 require_relative './student'
 require_relative './teacher'
 require_relative './book'
