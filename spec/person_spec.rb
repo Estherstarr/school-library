@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Test the class person
 require './person'
 

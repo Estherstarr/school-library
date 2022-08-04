@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
+# Defines a trimmer_decorator class
 require_relative 'base_decorator'
 
-# Defines a trimmer_decorator class
 class TrimmerDecorator < BaseDecorator
   def correct_name
     name = @nameable.correct_name
