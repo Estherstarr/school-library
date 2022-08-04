@@ -17,4 +17,13 @@ class Student < Person
   def play_hooky
     '¯\(ツ)/¯'
   end
+
+  def to_h
+    {
+      age: age,
+      name: name,
+      type: 'student',
+      parent_permission: true
+    }
+  end
 end

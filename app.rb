@@ -38,6 +38,7 @@ class App
   #Write generated json to file
   def save_data_to_file
     save_books_data_to_file
+    save_person_data_to_file
   end
 
   def save_books_data_to_file
@@ -48,9 +49,19 @@ class App
     file.close
   end
 
+  def save_person_data_to_file
+    people_list = @people.map { |person| person.to_h }
+    people_json = JSON.generate(people_list)
+    file = File.new("people.json", "w")
+    file.write(people_json)
+    file.close
+  end
+
   def load_data
     #load data from all the three files
     load_books
+    load_student
+    load_teacher
   end
 
   def load_books
@@ -64,6 +75,33 @@ class App
       end
     rescue StandardError
       @books = []
+    end
+  end
+
+  def load_student
+    begin
+      file = File.open("people.json")
+      json_data = file.read
+      parsed_data = JSON.parse(json_data)
+      file.close
+      @people = parsed_data.map do |person_data|
+        Student.new(age: person_data['age'], name: person_data['name'], parent_permission: person_data['permission'])
+      end
+    rescue StandardError
+      @people = []
+    end
+  end
+  def load_teacher
+    begin
+      file = File.open("people.json")
+      json_data = file.read
+      parsed_data = JSON.parse(json_data)
+      file.close
+      @people = parsed_data.map do |person_data|
+        Teacher.new(age: person_data['age'], name: person_data['name'], specialization: person_data['specialization'])
+      end
+    rescue StandardError
+      @people = []
     end
   end
 
