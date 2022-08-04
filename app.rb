@@ -1,11 +1,10 @@
-# frozen_string_literal: true
-
 require_relative './student'
 require_relative './teacher'
 require_relative './book'
 require_relative './rental'
 require 'json'
 
+# rubocop:disable all
 # This is the main entry point for the app
 class App
   def initialize
@@ -13,13 +12,13 @@ class App
     @books = []
     @rentals = []
   end
-
+  
   def run
     load_data
     puts "Welcome to School Library App!\n\n"
 
     option = nil
-    while option != 7
+    while option != 7 
       puts 'Please choose an option by entering a number:'
       menu_options
 
@@ -35,41 +34,42 @@ class App
     puts 'Good Bye!'
   end
 
-  # Generate json for books
-  # Write generated json to file
+  #Generate json for books
+  #Write generated json to file
   def save_data_to_file
     save_books_data_to_file
     save_person_data_to_file
     save_rental_data_to_file
+
   end
 
   def save_books_data_to_file
-    books_list = @books.map(&:to_h)
+    books_list = @books.map { |book| book.to_h }
     books_json = JSON.generate(books_list)
-    file = File.new('books.json', 'w')
+    file = File.new("books.json", "w")
     file.write(books_json)
     file.close
   end
 
   def save_person_data_to_file
-    people_list = @people.map(&:to_h)
+    people_list = @people.map { |person| person.to_h }
     people_json = JSON.generate(people_list)
-    file = File.new('people.json', 'w')
+    file = File.new("people.json", "w")
     file.write(people_json)
     file.close
   end
 
   def save_rental_data_to_file
-    rentals_list = @rentals.map(&:to_h)
+    rentals_list = @rentals.map { |rental| rental.to_h }
     rental_json = JSON.generate(rentals_list)
 
-    file = File.new('rental.json', 'w')
+    file = File.new("rental.json", "w")
     file.write(rental_json)
     file.close
   end
 
   def load_data
-    # load data from all the three files
+    #load data from all the three files
     load_books
     load_student
     load_teacher
@@ -77,53 +77,61 @@ class App
   end
 
   def load_books
-    file = File.open('books.json')
-    json_data = file.read
-    parsed_data = JSON.parse(json_data)
-    file.close
-    @books = parsed_data.map do |book_data|
-      Book.new(title: book_data['title'], author: book_data['author'])
+    begin
+      file = File.open("books.json")
+      json_data = file.read
+      parsed_data = JSON.parse(json_data)
+      file.close
+      @books = parsed_data.map do |book_data|
+        Book.new(title: book_data['title'], author: book_data['author'])
+      end
+    rescue StandardError
+      @books = []
     end
-  rescue StandardError
-    @books = []
   end
 
   def load_student
-    file = File.open('people.json')
-    json_data = file.read
-    parsed_data = JSON.parse(json_data)
-    file.close
-    @people = parsed_data.map do |person_data|
-      Student.new(age: person_data['age'], name: person_data['name'], parent_permission: person_data['permission'])
+    begin
+      file = File.open("people.json")
+      json_data = file.read
+      parsed_data = JSON.parse(json_data)
+      file.close
+      @people = parsed_data.map do |person_data|
+        Student.new(age: person_data['age'], name: person_data['name'], parent_permission: person_data['permission'])
+      end
+    rescue StandardError
+      @people = []
     end
-  rescue StandardError
-    @people = []
   end
-
   def load_teacher
-    file = File.open('people.json')
-    json_data = file.read
-    parsed_data = JSON.parse(json_data)
-    file.close
-    @people = parsed_data.map do |person_data|
-      Teacher.new(age: person_data['age'], name: person_data['name'], specialization: person_data['specialization'])
+    begin
+      file = File.open("people.json")
+      json_data = file.read
+      parsed_data = JSON.parse(json_data)
+      file.close
+      @people = parsed_data.map do |person_data|
+        Teacher.new(age: person_data['age'], name: person_data['name'], specialization: person_data['specialization'])
+      end
+    rescue StandardError
+      @people = []
     end
-  rescue StandardError
-    @people = []
   end
 
   def load_rentals
-    file = File.open('rentals.json')
-    json_data = file.read
-    parsed_data = JSON.parse(json_data)
-    file.close
+    begin
+      file = File.open("rentals.json")
+      json_data = file.read
+      parsed_data = JSON.parse(json_data)
+      file.close
 
-    @rentals = parsed_data.map do |rental_data|
-      Rentals.new(date: rental_data['date'], book: rental_data['book'], person: rental_data['person'])
+      @rentals = parsed_data.map do |rental_data|
+        Rentals.new(date: rental_data['date'], book: rental_data['book'], person: rental_data['person'])
+      end
+    rescue StandardError
+      @rentals = []
     end
-  rescue StandardError
-    @rentals = []
   end
+
 
   def menu_options
     puts '1 - List all books'
@@ -162,7 +170,7 @@ class App
     puts 'Books'.upcase
     puts
     puts 'No book yet! Choose option 4 to add a book ' if @books.empty?
-
+    
     @books.each do |book|
       puts "#{key} - #{book.title} by #{book.author}"
       key += 1
@@ -175,7 +183,7 @@ class App
     puts 'People'.upcase
     puts
     puts 'No people yet! Choose option 3 to add a person ' if @people.empty?
-
+    
     @people.each do |person|
       print "#{key} - [#{person.class.name} ID]: #{person.id} Name: #{person.name} "
       print "Parent Permission: #{person.parent_permission}" if person.is_a?(Student)
@@ -188,7 +196,7 @@ class App
   def create_person
     entry = nil
     print 'Choose option 1 to create a Student or option 2 for a Teacher: '
-
+    
     until [1, 2].include?(entry)
       entry = gets.chomp.strip.to_i
       puts
@@ -264,7 +272,7 @@ class App
     list_all_books
 
     print 'Select the key of the book: '
-
+    
     selected_book = gets.chomp.chomp.to_i
 
     list_all_people
@@ -279,7 +287,7 @@ class App
     person = @people[selected_person]
     new_rental = Rental.new(date: date, book: book, person: person)
     @rentals.push(new_rental)
-
+    
     puts
     puts 'Rental was created successfuly!'
     puts
