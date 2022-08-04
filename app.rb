@@ -2,6 +2,7 @@ require_relative './student'
 require_relative './teacher'
 require_relative './book'
 require_relative './rental'
+require 'json'
 
 # rubocop:disable all
 # This is the main entry point for the app
@@ -13,6 +14,7 @@ class App
   end
   
   def run
+    load_data
     puts "Welcome to School Library App!\n\n"
 
     option = nil
@@ -27,7 +29,42 @@ class App
       puts
     end
     puts 'Closing Application...'
+    puts 'Saving data to file...'
+    save_data_to_file
     puts 'Good Bye!'
+  end
+
+  #Generate json for books
+  #Write generated json to file
+  def save_data_to_file
+    save_books_data_to_file
+  end
+
+  def save_books_data_to_file
+    books_list = @books.map { |book| book.to_h }
+    books_json = JSON.generate(books_list)
+    file = File.new("books.json", "w")
+    file.write(books_json)
+    file.close
+  end
+
+  def load_data
+    #load data from all the three files
+    load_books
+  end
+
+  def load_books
+    begin
+      file = File.open("books.json")
+      json_data = file.read
+      parsed_data = JSON.parse(json_data)
+      file.close
+      @books = parsed_data.map do |book_data|
+        Book.new(title: book_data['title'], author: book_data['author'])
+      end
+    rescue StandardError
+      @books = []
+    end
   end
 
   def menu_options
