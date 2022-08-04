@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Writing test for the student class
 require './student'
 require './classroom'

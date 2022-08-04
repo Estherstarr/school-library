@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Defines a person class
 require_relative 'nameable'
 

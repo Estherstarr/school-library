@@ -1,4 +1,6 @@
-# Create main app 
+# frozen_string_literal: true
+
+# Create main app
 
 require_relative 'app'
 

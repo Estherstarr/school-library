@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Test if the teacher has correct name, age, specialization and have permission to rent a book.
 
 require './teacher'

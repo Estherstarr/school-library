@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Defines a student class
 require_relative 'person'
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Test the class nameable
 require './person'
 require './nameable'
