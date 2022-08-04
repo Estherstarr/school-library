@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This is the main entry point for the app
 require_relative './student'
 require_relative './teacher'
@@ -134,6 +132,8 @@ class App
     puts '7 - Exit'
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+
   def select_options(option)
     case option
     when 1
@@ -167,6 +167,7 @@ class App
       key += 1
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def list_all_people
     key = 1

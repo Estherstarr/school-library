@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Test if the classroom class is defined
 require './classroom'
 

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Test if the rental class is defined
 require './rental'
 require './book'
