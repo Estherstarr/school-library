@@ -1,6 +1,6 @@
+# Defines a person class
 require_relative 'nameable'
 
-# Defines a person class
 class Person < Nameable
   attr_reader :id, :rentals, :parent_permission
   attr_accessor :name, :age

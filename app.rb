@@ -1,11 +1,9 @@
+# This is the main entry point for the app
 require_relative './student'
 require_relative './teacher'
 require_relative './book'
 require_relative './rental'
 require 'json'
-
-# rubocop:disable all
-# This is the main entry point for the app
 class App
   def initialize
     @people = []

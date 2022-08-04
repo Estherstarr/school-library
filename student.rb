@@ -1,6 +1,6 @@
+# Defines a student class
 require_relative 'person'
 
-# Defines a student class
 class Student < Person
   attr_reader :classroom
 
