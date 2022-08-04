@@ -1,29 +1,42 @@
+# frozen_string_literal: true
+
+require 'json'
+require_relative './stored_data'
 require_relative './student'
 require_relative './teacher'
 require_relative './book'
 require_relative './rental'
 require 'json'
 
-# rubocop:disable all
 # This is the main entry point for the app
 class App
   def initialize
-    @people = []
-    @books = []
-    @rentals = []
+    @people = StoredData.new('people')
+    @books = StoredData.new('books')
+    @rentals = StoredData.new('rentals')
+    @books.read.map { |arr| Book.new(arr['title'], arr['author']) }
+    @people.read.map do |arr|
+      if arr['class'].include?('Student')
+        Student.new(arr['age'], arr['name'], arr['parent_permission'])
+      elsif Teacher.new(arr['age'], arr['name'], arr['specialization'])
+      end
+    end
+    @rentals.read.map do |arr|
+      book = @books.select { |item| item.title == arr['book_title'] }[0]
+      person = @people.select { |per| per.id == arr['person_id'] }[0]
+      Rental.new(book, person, arr['date'])
+    end
   end
-  
+
   def run
     load_data
     puts "Welcome to School Library App!\n\n"
 
     option = nil
-    while option != 7 
-      puts 'Please choose an option by entering a number:'
+    while option != 7
+      puts 'Please choose an option by entering a number: '
       menu_options
-
       print '(Option number): '
-
       option = gets.chomp.strip.to_i
       select_options(option)
       puts
@@ -169,10 +182,11 @@ class App
     puts
     puts 'Books'.upcase
     puts
-    puts 'No book yet! Choose option 4 to add a book ' if @books.empty?
-    
+    puts 'No book yet! Choose option 4 to add a book '
     @books.each do |book|
-      puts "#{key} - #{book.title} by #{book.author}"
+      print "#{key} - [#{book.class.name} ID]: #{book.id} Title: #{book.title} "
+      print "Author: #{book.author}"
+      puts
       key += 1
     end
   end
@@ -183,7 +197,6 @@ class App
     puts 'People'.upcase
     puts
     puts 'No people yet! Choose option 3 to add a person ' if @people.empty?
-    
     @people.each do |person|
       print "#{key} - [#{person.class.name} ID]: #{person.id} Name: #{person.name} "
       print "Parent Permission: #{person.parent_permission}" if person.is_a?(Student)
@@ -196,7 +209,6 @@ class App
   def create_person
     entry = nil
     print 'Choose option 1 to create a Student or option 2 for a Teacher: '
-    
     until [1, 2].include?(entry)
       entry = gets.chomp.strip.to_i
       puts
@@ -218,10 +230,8 @@ class App
       age = gets.chomp.to_i
       print 'Enter valid age for student: ' if age <= 0
     end
-
     print 'Enter Name: '
     name = gets.chomp.strip.capitalize
-
     print 'Does student have parent permission? (Y/N): '
     permission = gets.chomp.strip.upcase
 
@@ -231,7 +241,8 @@ class App
     when 'N', 'NO'
       permission = false
     end
-    @people << Student.new(age: age, name: name, parent_permission: permission, classroom: nil)
+    new_student = Student.new(age: age, name: name, parent_permission: permission, classroom: nil)
+    @people.push(new_student)
     puts
     puts 'New student created successfuly!'
     puts
@@ -247,47 +258,35 @@ class App
 
     print 'Enter name: '
     name = gets.chomp.strip.capitalize
-
     print 'Enter specialization: '
     specialization = gets.chomp.strip.capitalize
-
-    @people << Teacher.new(age: age, name: name, specialization: specialization)
+    @people.push(Teacher.new(age: age, name: name, specialization: specialization))
     puts 'New teacher created successfuly!'
   end
 
   def create_book
     print 'Enter title: '
     title = gets.chomp.strip.capitalize
-
     print 'Enter author: '
     author = gets.chomp.strip.capitalize
-
-    @books << Book.new(title: title, author: author)
-    puts
+    new_book = Book.new(title: title, author: author)
+    @books = new_book
     puts 'New book was created successfully!'
     puts
   end
 
   def create_rental
     list_all_books
-
     print 'Select the key of the book: '
-    
     selected_book = gets.chomp.chomp.to_i
-
     list_all_people
-
     print 'Select the key of the person: '
     selected_person = gets.chomp.chomp.to_i
-
     print 'Select the date: (Year/Month/Day): '
-
     date = gets.chomp.strip
     book = @books[selected_book]
     person = @people[selected_person]
-    new_rental = Rental.new(date: date, book: book, person: person)
-    @rentals.push(new_rental)
-    
+    @rentals.push.Rental.new(date: date, book: book, person: person)
     puts
     puts 'Rental was created successfuly!'
     puts
